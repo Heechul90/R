@@ -108,3 +108,5 @@ merge(df1,df2)    # 공통으로 들어있는 것만 출력함
 merge(df1, df2, all=T)    # 데이터가 없는것도 모두 나오게 출력함
 cbind(df1, df2)
 rbind(df1, df2)
+
+rm(list=ls())
