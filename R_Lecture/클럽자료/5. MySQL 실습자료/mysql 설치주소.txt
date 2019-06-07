@@ -1,0 +1,5 @@
+https://dev.mysql.com/downloads/windows/installer/5.7.html
+들어가서 414m 짜리로 다운로드.
+그 다음은 실습자료 따라서 할것.
+
+.net.framework 4.5.2

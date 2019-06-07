@@ -1,0 +1,172 @@
+My SQL 데이터 타입 - http://www.incodom.kr/DB_-_%EB%8D%B0%EC%9D%B4%ED%84%B0_%ED%83%80%EC%9E%85/MYSQL
+
+My SQL 수업
+
+use ezen2; 사용시작하기전 실행하고 시작
+
+- 테이블을 만들자
+create table if not exists address_book (
+  no int unsigned not null auto_increment,
+  name varchar(10) not null,
+  tel varchar(14),
+  nickname varchar(20) default '별명',
+  primary key(no)
+) auto_increment=10001 default charset=utf8;
+
+show tables; 현재 있는 테이블을 보여준다.
+
+desc address_book; 내가 만든 테이블.
+
+-테이블 만들기(tmp)
+create table tmp (
+  id int primary key,
+    name varchar(10)
+    );
+
+- 테이블 지우기(tmp)
+drop table(tmp)
+
+- 이름 바꾸기 address_book 에서 addr_book으로
+rename table address_book to addr_book;
+
+- 추가하기
+alter table addr_book add gender char(2) not null;
+
+- 원하는 줄에 추가하기. 이건 tel 다음에 추가.
+alter table addr_book add email varchar(20) not null after tel;
+
+- 지우기. nickname 지움.
+alter table addr_book drop nickname;
+
+- 컬럼명, 컬럼 자료 바꾸기.
+alter table addr_book change no abid int(8);
+
+-
+alter table addr_book change abid abid int unsigned not null auto_increment;
+
+after table addr_book modify gender char(2) after name;
+desc addr_book;
+
+- kor 찾기.검색. =은 숫자에 많이 쓰이고 단어에는 like를 많이 쓴다.
+select * from city where countrycode like 'kor';
+select * from city where countrycode='kor';
+
+- 경기도 찾기
+select * from city where district like 'kyonggi';
+
+- 경기도 이고, 인구가 50만이 넘는 거 찾아줘.
+select * from city where district like 'kyonggi' and population > 500000;
+... dplyr 에서는 filter로 검색.
+addr_book%>%
+   filter(jdkfjdkjfkdjkfsadf
+
+- distinct는 유니크하게 구별되어 있는 것만 찾아 내오라.
+select district from city where countrycode='kor';    70개 나옴
+select distinct district from city where countrycode='kor';    15개 나옴..
+
+- 다른 데이터명을 쓰고 파일이름을 쓰면 찾을수 있다잉
+desc ezen.addr_book;
+
+- 검색검색
+select distinct district from city where countrycode='kor';
+select * from city where countrycode='kor' and population>1000000 and id%2 =1; 홀수찾기
+
+
+
+
+insert into eagles value(22, '이태양', '투수', '순천효천고','우투');
+insert into eagles(backno, name, position) values
+(36, '장민재', '투수', ,),
+(, '', '', ,),
+(, '', '', ,);
+select*from
+
+create table eagles (
+  backno int unsigned not null,
+  name varchar(10) not null,
+  position varchar(4) not null,
+  highschool varchar(10),
+  hand varchar(10),
+  primary key(backno)
+) ;
+
+update eagles set position= 내야수 where backno
+
+
+
+- 가상테이블만들기
+create view infielder as select * from eagles
+where position like '내야수';
+
+- 내야수 칼럼 빼고 가상테일블 만들기.
+create view infielder
+as select backno, name, highschool, hand from eagles
+where position like '내야수';
+
+
+-가상테이블 지우기.
+drop view infielder;
+
+-정보입력하기
+update eagles set birthday='1989-05-18' where backno=30;
+
+create table girl group(
+  _id int primary key auto_increment,
+  name varchar(32) not null,
+  debut date not null,
+  hit song id int
+) default charset=utf8;
+
+
+
+문제 1
+select * from girl_group where debut between '2009-01-01' and '2009-12-31';
+
+문제 2
+select gg.name, gg.debut, s.title
+  from girl_group as gg
+  inner join song as s
+  on gg._id = s.girl_group_id
+  where debut between '2009-01-01' and '2009-12-31';
+
+문제 3
+
+use world;
+select continent, count(*), sum(gnp), avg(gnp)
+from country group by continent;
+
+문제4
+select co.continent as '대륙명', co.name as '국가명',
+  c.name as '도시명', c.population as '인구수'
+  from country as co
+  inner join city as c
+  on co.Code=c.CountryCode
+  where co.Continent='Asia'
+  order by c.Population desc limit 10;
+
+문제 5
+select c.name as '도시명', c.population as '인구수', cl.language as '언어명'
+from city as c inner join countrylanguage as cl
+on c.CountryCode=cl.CountryCode
+where cl.IsOfficial=true
+order by c.Population desc limit 10;
+
+
+-자료를 csv 파일로 다운로드 하는 방법
+select * from girl_group into outfile
+ 'C:/ProgramData/MySQL Server 5.7/Uploads/girl_group.csv'
+ fields terminated by ','
+ enclosed by '"'
+ lines terminated by '\r\n';
+
+
+
+
+
+
+
+
+
+
+
+
