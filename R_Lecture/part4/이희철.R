@@ -58,6 +58,8 @@ legend(0.2, 7, c('Petal.Length', 'Petal.Width'), cex = 0.7, col =c('blue','red')
 
 dev.off()
 
+# 선생님 풀이
+
 
 # 2번품종별 평균치 비교하기
 iris
@@ -67,15 +69,24 @@ a <- iris %>%
   summarise_each(funs(mean), Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)
 a
 a1 <- a[,2:5]
-a1 <- t(a1)
 a1
+a2 <- t(a1)
+a2
 
 par(mfrow=c(1,1))
-barplot(as.matrix(a1), main= "품종별 평균", beside=T, col=rainbow(nrow(a1)), ylim=c(0,10),
+barplot(as.matrix(a2), main= "품종별 평균", beside=T, col=rainbow(nrow(a1)), ylim=c(0,10),
         names.arg=c('setosa', 'versicolor', 'virginica'))
 legend(1.5,10, c('Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width'), cex=0.8, fill=rainbow(nrow(a1)))
 
+barplot(as.matrix(a1), main= "품종별 평균", beside=T, col=rainbow(nrow(a1)), ylim=c(0,10),
+        names.arg=c('setosa', 'versicolor', 'virginica'), space=0.1)
 dev.off()
+
+# 막대 그래프 하나더 그려야 함. barplot으로 하나의 막대기에 각각 평균을 나타내는 그래프.
+
+# 선생님 풀이
+
+
 
 # 3번 Boxplot 12개 그리기.
 iris
@@ -115,4 +126,6 @@ legend(2.3,8, c('Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width'),
        cex=0.8, fill =c('red', 'yellow', 'green', 'blue'))
 
 dev.off()
+
+# 선생님 풀이
 
