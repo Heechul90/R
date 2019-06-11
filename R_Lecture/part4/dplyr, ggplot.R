@@ -2,13 +2,19 @@
 dev.off()
 mpg
 View(mpg)
-# 문제 1
-mpg1 <- mpg %>%
-  select(cty, hwy)
-mpg1
+library(dplyr)
+library(ggplot2)
+str(mpg)
+rm(list=ls())
 
-plot(mpg1, main='cty와 hwy의 산점도', col=c('blue', 'red'), xlim=c(5,38), ylim=c(10,45))
+# 문제 1
+mpg01 <- mpg %>%
+  select(cty, hwy)
+mpg01
+
+plot(mpg01, main='cty와 hwy의 산점도', col=c('blue', 'red'), xlim=c(5,38), ylim=c(10,45))
 legend(5, 45, c('cty', 'hwy'), cex = 0.7, col =c('blue','red'),pch=1)
+
 
 # 문제 2
 midwest
@@ -31,12 +37,14 @@ mpg3 <- mpg %>%
   filter(class=='suv') %>%
   select(manufacturer, class, cty) %>%
   summarise_each(funs(mean), cty) %>%
+  arrange(desc(cty)) %>%
   head(5)
 mpg3
 
-ggplot(mpg3, aes(x=manufacturer, y=cty)) +
-  geom_bar()
+ggplot(mpg3, aes(x=reorder(manufacturer, -cty), y=cty)) +
+  geom_col()
 dev.off()
+
 
 # 문제 4  -pass
 mpg
@@ -54,7 +62,6 @@ barplot(mpg44, main='Class', col='green',
 dev.off()
   
   
-  
 # 문제 5
 economics
 View(economics)
@@ -70,27 +77,44 @@ dev.off()
 # 문제 6
 mpg
 
-compact_cty <- mpg %>%
-  filter(class== 'compact') %>%
-  select(cty)
-compact_cty
 
-subcompact_cty <- mpg %>%
-  filter(class== 'subcompact') %>%
-  select(cty)
-subcompact_cty
-
-suv_cty <- mpg %>%
-  filter(class== 'suv') %>%
-  select(cty)
-suv_cty
-
-boxplot(compact_cty, main='compact_cty', col='red', names=c('cty'))
-boxplot(subcompact_cty, main='subcompact_cty', col='yellow', names=c('cty'))
-boxplot(suv_cty, main='suv_cty', col='green', names=c('cty'))
-
+mpg6 <- mpg %>%
+  filter(class %in% c("compact", "subcompact", "suv"))
+ggplot(mpg6, aes(x=class, y=cty,)) +
+  geom_boxplot()
 
 # 문제 7
-diamond
-# 집에서 하자하자
+# 7-1
+diamonds
+diamonds
+ggplot(diamonds, aes(x=cut)) +
+  geom_bar()
         
+# 7-2
+
+diamonds7_2 <- diamonds %>%
+  group_by(cut) %>%
+  summarise_each(funs(mean), price)
+diamonds7_2
+  
+ggplot(diamonds7_2, aes(x=cut, y=price,)) +
+  geom_col()
+
+  
+# 7-3
+diamonds7_3 <- diamonds %>%
+  group_by(color) %>%
+  summarise_each(funs(mean), price)
+diamonds7_3
+
+diamonds7_4 <- diamonds %>%
+  group_by(cut) %>%
+  summarise_each(funs(mean), price)
+diamonds7_4
+
+par(mfrow=c(1,2))
+ggplot(diamonds7_3, aes(x=color, y=price)) +
+  geom_col()
+
+ggplot(diamonds7_4, aes(x=cut, y=price)) +
+  geom_col()
