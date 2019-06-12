@@ -8,7 +8,7 @@ library(wordcloud)
 useSejongDic()
 library(RColorBrewer)
 library(stringr)
-
+getwd()
 data1 <-readLines('응답소_2015_01.txt')
 data2 <- sapply(data1, extractNoun, USE.NAMES = F)
 data2
