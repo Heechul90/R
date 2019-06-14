@@ -70,4 +70,16 @@ legend(0.3, 1, '제주도 추천 여행 코스', cex=0.6, fill=NA, border=NA,
 ### top10만 뽑아서 그래프 만들어 보기
 top10 <- head(sort(wordcount, decreasing = T), 10)
 top10
-## ggplot으로 pie 형 그래프 만들기
+## ggplot으로 bar 형 그래프 만들기
+
+df_top10 <- data.frame(top10)
+df_top10
+
+ggplot(df_top10, aes(x=rev, y=Freq, fill=rev)) +
+  geom_bar(stat = 'identity') +
+  ggtitle('그래프 제목 수정') +
+  theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 15, color = "darkblue")) + # 그래프 제목 수정
+  ylab('y축 이름 수정') +
+  xlab('x축 이름 수정') +
+  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=1, colour="black", size=8)) + # x축 변수 이름 수정
+  theme(axis.text.y=element_text(angle=90, hjust=1, vjust=1, colour="red", size=8))   # y축 변수 이름 수정
