@@ -1,0 +1,15 @@
+### 도전미션 2-1. '프로포즈 선물' 검색어 분석 결과를 그래프로 표시 하기
+setwd('D:/Heechul/R/R_Lecture/part2/stage2/ch2-1')
+install.packages('KoNLP')     # 한국어 관련 작업을 할때 필요한 패키지
+install.packages('wordcloud')     
+install.packages('stringr')
+install.packages('ggplot2')
+install.packages('dplyr')
+install.packages('coord')
+library(KoNLP)
+library(wordcloud)
+library(stringr)
+library(ggplot2)
+library(dplyr)
+library(RColorBrewer)
+useSejongDic()
