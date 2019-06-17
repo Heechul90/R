@@ -416,4 +416,4 @@ ggplot(region_ageg, aes(x= region, y= pct, fill= ageg)) +
   geom_col() +
   coord_flip() +
   scale_x_discrete(limits = order)
-
+z
