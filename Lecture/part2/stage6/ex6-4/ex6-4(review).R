@@ -5,6 +5,7 @@ setwd('D:/Heechul/R_Data_Analysis/Lecture/part2/stage6/ex6-4')
 ### 1. '한국복지패널데이터' 분석 준비하기
 ## 1)패키지 준비하기
 install.packages('foreign')
+install.packages('readxl')
 library(foreign)
 library(dplyr)
 library(ggplot2)
@@ -191,3 +192,36 @@ ggplot(ageg_income, aes(x= ageg, y= mean_income, fill= ageg)) +
   theme(legend.text = element_text(face='italic', colour = 'blue', size=8)) +
   geom_text(aes(y=mean_income - 5, label= paste(round(mean_income,1), '만원')),
             color='black', size=3)
+
+
+
+### 5. 연령대 및 성별 월급차이(성별 월급 차이는 연령대별로 다를까?)
+## 1) 연령대, 성별 및 월급 변수 검토 및 전처리
+## 2) 연령대 및 성별 월급 평균표 만들기
+sex_ageg_income <- welfare %>%
+  filter(!is.na(income)) %>%
+  group_by(ageg, sex) %>%
+  summarise(mean_income = mean(income))
+sex_ageg_income
+
+## 3) 그래프 그리기
+ggplot(sex_ageg_income, aes(x= ageg, y= mean_income, fill= sex)) +
+  geom_bar(stat = 'identity', colour = 'black') +
+  ggtitle('연령대 및 성별에 따른 평균 월급') +
+  xlab('연령대') +
+  ylab('평균월급') +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 15, color = 'red', hjust = 0.5,
+                                  face = 'italic')) +
+  theme(axis.title.x = element_text(size = 10, color = 'blue', hjust=0.5,
+                                    face = 'bold')) +
+  theme(axis.title.y = element_text(size = 15, color = 'green', hjust = 0.5,)) +
+  theme(axis.text.x = element_text(angle = 45, color = 6)) +
+  theme(axis.text.y = element_text(color = 8)) +
+  theme(legend.title = element_text(size = 15, color = 'darkblue')) +
+  theme(legend.text = element_text(size = 10, color = 11)) +
+  theme(legend.position = c(0 ,0.9)) +
+  theme(legend.background = element_rect())
+
+
+        
