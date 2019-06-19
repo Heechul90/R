@@ -81,8 +81,10 @@ ggplot(df_top10, aes(x=rev, y=Freq)) +
                                   size = 15, color = "black")) +# 그래프 제목 수정
   ylab('') +
   xlab('') +
-  theme(axis.text.x=element_text(angle=90, hjust=1, vjust=0, colour="black", size=8)) + # x축 변수 이름 수정
-  theme(axis.text.y=element_text(hjust=0, vjust=1, colour="black", size=8)) +  # y축 변수 이름 수정
+  theme(axis.text.x=element_text(angle=90, hjust=1,
+                                 vjust=0, colour="black", size=8)) + # x축 변수 이름 수정
+  theme(axis.text.y=element_text(hjust=0,
+                                 vjust=1, colour="black", size=8)) +  # y축 변수 이름 수정
   # geom_text(aes(y=Freq+0.5, label=ylabel03), color='black') +
   geom_text(aes(y=Freq+1, label=ylabel01), color='black', size=3) +
   geom_text(aes(y=Freq-1, label=ylabel02), color='black', size=3) +
