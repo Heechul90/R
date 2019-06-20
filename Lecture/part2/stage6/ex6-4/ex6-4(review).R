@@ -10,6 +10,12 @@ library(foreign)
 library(dplyr)
 library(ggplot2)
 library(readxl)
+library(extrafont)
+
+windowsFonts(hanna=windowsFont("BM HANNA 11yrs old")) # 폰트이름 변경 
+windowsFonts(dohyeon=windowsFont("BM DoHyeon"))
+windowsFonts(jalnan=windowsFont("Jalnan"))
+windowsFonts(binggrae=windowsFont("Binggrae Taom"))
 
 ## 2)데이터 준비하기
 # 데이터 불러오기
@@ -223,5 +229,134 @@ ggplot(sex_ageg_income, aes(x= ageg, y= mean_income, fill= sex)) +
   theme(legend.position = c(0 ,0.9)) +
   theme(legend.background = element_rect())
 
+ggplot(sex_ageg_income, aes(x= ageg, y= mean_income, fill= sex)) +
+  geom_bar(stat = 'identity', colour = 'black', position = 'dodge') +
+  ggtitle('연령대 및 성별에 따른 평균 월급') +
+  xlab('연령대') +
+  ylab('평균월급') +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 15, color = 'red', hjust = 0.5,
+                                  face = 'italic')) +
+  theme(axis.title.x = element_text(size = 10, color = 'blue', hjust=0.5,
+                                    face = 'bold')) +
+  theme(axis.title.y = element_text(size = 15, color = 'green', hjust = 0.5,)) +
+  theme(axis.text.x = element_text(angle = 45, color = 6)) +
+  theme(axis.text.y = element_text(color = 8)) +
+  theme(legend.title = element_text(size = 15, color = 'darkblue')) +
+  theme(legend.text = element_text(size = 10, color = 11)) +
+  theme(legend.position = c(0 ,0.9)) +
+  theme(legend.background = element_rect())
 
-        
+
+## 1) 성별 나이별 및 월급 변수 검토 및 전처리
+# 위에서 나이별, 연령별 월급 다 했음
+## 2) 성별 나이별 월급 평균표 만들기
+sex_age <- welfare %>%
+  filter(!is.na(income)) %>%
+  group_by(age, sex) %>%
+  summarise(mean_income = mean(income))
+sex_age
+
+## 3) 그래프 그리기
+
+ggplot(sex_age, aes(x=age, y= mean_income, col = sex)) +
+  geom_line(linetype=1, size= 1) +
+  ggtitle('연령별 및 성별에 따른 평균 월급') +
+  xlab('연령별') +
+  ylab('평균월급') +
+  theme_minimal() +
+  theme(plot.title = element_text(family = 'jalnan', size = 15, color = 'red', hjust = 0.5,
+                                  face = 'italic')) +
+  theme(axis.title.x = element_text(size = 10, color = 'blue', hjust=0.5,
+                                    face = 'bold')) +
+  theme(axis.title.y = element_text(size = 15, color = 'green', hjust = 0.5,)) +
+  theme(axis.text.x = element_text(angle = 45, color = 6)) +
+  theme(axis.text.y = element_text(color = 8)) +
+  theme(legend.title = element_text(size = 15, color = 'darkblue')) +
+  theme(legend.text = element_text(size = 10, color = 11)) +
+  theme(legend.background = element_rect()) +
+  geom_hline(yintercept = 100, linetype=2, color="red", lwd=1) 
+
+
+
+
+### 6. 직업별 월급 차이(어떤 직업이 월급을 가장 많이 받을까?)
+## 1) 직업 변수 검토하기
+class(welfare$code_job)
+table(welfare$code_job)
+
+## 2) 직업분류코드 목록 불러오기
+list_job <- read_excel('data/Koweps_Codebook.xlsx', col_names = T, sheet = 2)
+list_job
+dim(list_job)
+
+# welfare에 직업명 결합
+welfare <- left_join(welfare, list_job, id= 'code_job')
+welfare %>%
+  filter(!is.na(code_job)) %>%
+  select(code_job, job) %>%
+  head(10)
+  
+## 3) 직업별 월급 평균표 만들기
+job_income <- welfare %>%
+  filter(!is.na(job) & !is.na(income)) %>%
+  group_by(job) %>%
+  summarise(mean_income = mean(income))
+job_income
+
+top10 <- job_income %>%
+  arrange(desc(mean_income)) %>%
+  head(10)
+top10
+
+bot10 <- job_income %>%
+  arrange(mean_income) %>%
+  head(10)
+bot10
+
+## 4) 그래프 그리기
+ggplot(top10, aes(reorder(job, mean_income), y= mean_income, fill= job)) +
+  geom_bar(stat = 'identity') +
+  coord_flip() +
+  ggtitle('직업에 따른 평균 월급 TOP 10') +
+  xlab('직업') +
+  ylab('평균 월급') +
+  theme_minimal() +
+  theme(plot.title = element_text(family = 'jalnan', size = 15, color = 'red', hjust = 0.5,
+                                  face = 'italic')) +
+  theme(axis.title.x = element_text(size = 10, color = 'blue', hjust=0.5,
+                                    face = 'bold')) +
+  theme(axis.title.y = element_text(size = 15, color = 'green', hjust = 0.5,)) +
+  theme(axis.text.x = element_text(angle = 45, color = 6)) +
+  theme(axis.text.y = element_text(color = 'black', size=8)) +
+  theme(legend.title = element_text(face=4, size = 15, color = 'darkblue')) +
+  theme(legend.text = element_text(size = 8, color = 11)) +
+  theme(legend.justification = "bottom") +
+  theme(legend.background = element_rect(color = 'red', size = 2,linetype = 'dashed')) +
+  geom_text(aes(y=mean_income-300, label=paste(round(mean_income, 1), '만원')), col= 'red')
+
+
+ggplot(bot10, aes(reorder(job, mean_income), y= mean_income, fill= job)) +
+  geom_bar(stat = 'identity') +
+  coord_flip() +
+  ggtitle('직업에 따른 평균 월급 BOTTOM 10') +
+  xlab('직업') +
+  ylab('평균 월급') +
+  theme_minimal() +
+  theme(plot.title = element_text(family = 'jalnan', size = 15, color = 'red', hjust = 0.5,
+                                  face = 'italic')) +
+  theme(axis.title.x = element_text(size = 10, color = 'blue', hjust=0.5,
+                                    face = 'bold')) +
+  theme(axis.title.y = element_text(size = 15, color = 'green', hjust = 0.5,)) +
+  theme(axis.text.x = element_text(angle = 45, color = 6)) +
+  theme(axis.text.y = element_text(color = 'black', size=8)) +
+  theme(legend.title = element_text(face=4, size = 15, color = 'darkblue')) +
+  theme(legend.text = element_text(size = 8, color = 11)) +
+  theme(legend.justification = "bottom") +
+  theme(legend.background = element_rect(color = 'red', size = 2,linetype = 'dashed')) +
+  geom_text(aes(y=mean_income-50, label=paste(round(mean_income, 1), '만원')), col= 'red')
+
+
+
+
+### 7. 성별 직업 빈도(성별로 어떤 직업이 가장 많을까?)
