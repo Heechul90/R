@@ -1,0 +1,27 @@
+#예제 5-8
+ 
+ install.packages("googleVis")
+ install.packages("ggmap")
+ library(googleVis)
+ library(ggmap)
+ 
+ ft_placelst <- function(place) {
+   temp <- geocode(place) # 이부분이 핵심!! 위도 경도를 임시변수에 담습니다
+   place <- gsub("제주 ","",place)
+   df_lst <- cbind(place,temp) # 여행지이름 위도 경도'로 이루어진 데이터프레임
+   return(df_lst)
+ }
+ 
+ df_placelst <- ft_placelst(readLines("제주여행코스.txt"))
+ latlon <- paste(df_placelst$lat,":",df_placelst$lon)
+ latlon <- gsub(" ","",latlong)
+ 
+ df_placelst <- cbind(df_placelst, latlon)
+ df_placelst
+ placePath <- gvisMap(df_placelst, "latlong" ,"place" , 
+                      options=list(showTip=TRUE, showLine=TRUE, 
+                                   enableScrollWheel=TRUE, 
+                                   mapType='hybrid', 
+                                   useMapTypeControl=TRUE, 
+                                   width=800,height=1000))
+ plot(placePath)

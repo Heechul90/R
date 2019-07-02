@@ -1,0 +1,31 @@
+#예제 5-22
+
+ txt1 <- gvisScatterChart(women)
+ plot(txt1)
+
+ txt2 <- gvisScatterChart(women, options=list(legend="none",
+ lineWidth="3", pointSize="3",
+ title="Women", vAxis="{title:'weight (lbs)'}",
+ crosshair="{ trigger: 'both' }",
+ hAxis="{title:'height (in)'}", width=800, height=600))
+ plot(txt2)
+
+#[ 포인터 모양 변경하기 ]
+
+ mtx <- matrix(nrow=6,ncol=6)
+ mtx[col(mtx)==row(mtx)] <- 1:6
+ dat <- data.frame(X=1:6, mtx)
+ SC <- gvisScatterChart(dat,
+ options=list(
+ title="Customizing points",
+ legend="right",
+ pointSize=30,
+ series="{
+ 0: { pointShape: 'circle' },
+ 1: { pointShape: 'triangle' },
+ 2: { pointShape: 'square' },
+ 3: { pointShape: 'diamond' },
+ 4: { pointShape: 'star' },
+ 5: { pointShape: 'polygon' }
+ }",width=800, height=400))
+ plot(SC)

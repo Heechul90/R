@@ -1,0 +1,10 @@
+#¿¹Á¦ 5-9
+ 
+ setwd("c:\\r_temp")
+ library(googleVis)
+ CityPopularity
+ ex1 <-gvisGauge(CityPopularity, options=list(min=0, max=800, 
+                  greenFrom=500, greenTo=800, 
+                  yellowFrom=300, yellowTo=500,
+                  redFrom=0, redTo=300, width=400, height=300))
+ plot(ex1)

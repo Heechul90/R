@@ -1,0 +1,34 @@
+#[ 미션 3-3 답 ]
+
+ setwd("c:\\r_temp")
+ var_avg <- read.csv("2000-2013년 연령별실업율_연령별평균_세로.csv",sep=",",
+                    stringsAsFactors = FALSE)
+ 
+ colname <- var_avg$연도
+ 
+ v_20 <- var_avg[,2]
+ v_30 <- var_avg[,3]
+ v_40 <- var_avg[,4]
+ v_50 <- var_avg[,5]
+ v_60 <- var_avg[,6]
+ 
+ plot(v_20,xlab="",ylab="",ylim=c(0,11),axes=FALSE,col="violet",type="o",lwd=2,
+      main="연령별 실업률 현황(단위:%)  출처:통계청")
+ 
+ axis(1,at=1:14,label=colname,las=2)
+ axis(2,las=1)
+ 
+ lines(v_30 ,col="blue",type="o",lwd=2)
+ lines(v_40 ,col="red",type="o",lwd=2)
+ lines(v_50 ,col="black",type="o",lwd=2)
+ lines(v_60 ,col="orange",type="o",lwd=2)
+ 
+ abline(h=seq(0,10,0.5),v=seq(1,14,1),lty=2,lwd=0.2)
+ 
+ col <- names(var_avg[2:6])
+ col2 <- gsub("X","", col) 
+ colors <- c("violet","blue","red","black","orange")
+ legend(12,11,col2,cex=0.8,col=colors,lty=1,lwd=2,bg="white")
+ savePlot("total.png",type="png")
+
+

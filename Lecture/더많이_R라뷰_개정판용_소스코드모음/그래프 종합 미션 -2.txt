@@ -1,0 +1,151 @@
+#[ 그래프 종합 미션 2 소소 코드 ] 
+
+#[ 20대 창업 키워드 분석 소스 코드 ]
+
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(KoNLP)  
+ library(wordcloud)
+ library(stringr)
+ useSejongDic() 
+ data1 <- readLines("job_20.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ txt <- readLines("20대창업gsub.txt")
+ cnt_txt <- length(txt)
+ cnt_txt
+ for( i in 1:cnt_txt) {
+      data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) # 두 글자 이상 되는 것만 필터링하기
+ write(unlist(data3),"job_20.txt") 
+ data4 <- read.table("job_20.txt")
+ data4
+ nrow(data4) 
+ wordcount <- table(data4) 
+ wordcount
+ head(sort(wordcount, decreasing=T),20)
+ bchart <- head(sort(wordcount, decreasing=T),10)
+ bplot <- barplot(bchart,  main = "20대 창업 관련 키워드 분석     ", col = rainbow(10), 
+        cex.names=0.7, las = 2,ylim=c(0,150))
+ pct <- round(bchart/sum(bchart) * 100 ,1)
+ text(x = bplot, y = bchart*1.05, labels = paste("(",pct,"%",")"), col = "black", cex = 0.7)
+ text(x = bplot, y = bchart*0.85, labels = paste(bchart,"건"), col = "black", cex = 0.7)
+
+#[ 30대 창업 키워드 분석 소스 코드]
+
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(KoNLP)  
+ library(wordcloud)
+ library(stringr)
+ useSejongDic() 
+ data1 <- readLines("job_30.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ data3 <- gsub("프렌차이즈","프랜차이즈",data3)
+ data3 <- gsub("음식","요식업",data3)
+ data3 <- gsub("커피숍","카페",data3)
+ txt <- readLines("30대창업gsub.txt")
+ cnt_txt <- length(txt)
+ cnt_txt
+ for( i in 1:cnt_txt) {
+      data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) # 두 글자 이상 되는 것만 필터링하기
+ write(unlist(data3),"job_3.txt") 
+ data4 <- read.table("job_3.txt")
+ wordcount <- table(data4) 
+ head(sort(wordcount, decreasing=T),20)
+ bchart <- head(sort(wordcount, decreasing=T),10)
+ bplot <- barplot(bchart,  main = "30대 창업 관련 키워드 분석     ", col = rainbow(10), 
+        cex.names=0.7, las = 2,ylim=c(0,150))
+ pct <- round(bchart/sum(bchart) * 100 ,1)
+ text(x = bplot, y = bchart*1.05, labels = paste("(",pct,"%",")"), col = "black", cex = 0.7)
+ text(x = bplot, y = bchart*0.85, labels = paste(bchart,"건"), col = "black", cex = 0.7)
+
+
+#[40대 창업 키워드 분석 소스 코드 ]
+
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(KoNLP)  
+ library(wordcloud)
+ library(stringr)
+ useSejongDic() 
+ data1 <- readLines("job_40.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ data3 <- gsub("남자","남성",data3)
+ txt <- readLines("40대창업gsub.txt")
+ cnt_txt <- length(txt)
+ cnt_txt
+ for( i in 1:cnt_txt) {
+      data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) # 두 글자 이상 되는 것만 필터링하기
+ write(unlist(data3),"job_4.txt") 
+ data4 <- read.table("job_4.txt")
+ wordcount <- table(data4) 
+ head(sort(wordcount, decreasing=T),20)
+ bchart <- head(sort(wordcount, decreasing=T),10)
+ bplot <- barplot(bchart,  main = "40대 창업 관련 키워드 분석     ", col = rainbow(10), 
+         cex.names=0.7, las = 2,ylim=c(0,150))
+ pct <- round(bchart/sum(bchart) * 100 ,1)
+
+ text(x = bplot, y = bchart*1.05, labels = paste("(",pct,"%",")"), col = "black", cex = 0.7)
+ text(x = bplot, y = bchart*0.85, labels = paste(bchart,"건"), col = "black", cex = 0.7)
+
+
+
+
+#[50대 창업 키워드 분석 소스 코드]
+
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(KoNLP)  
+ library(wordcloud)
+ library(stringr)
+ useSejongDic() 
+ data1 <- readLines("job_50.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ txt <- readLines("40대창업gsub.txt")
+ cnt_txt <- length(txt)
+ for( i in 1:cnt_txt) {
+      data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) # 두 글자 이상 되는 것만 필터링하기
+ data3 <- gsub("남자","남성",data3)
+ data3 <- gsub("pc","PC방",data3)
+ data3 <- gsub("PC","PC방",data3)
+ data3 <- gsub("컴퓨터","PC방",data3)
+ data3 <- gsub("피시방","PC방",data3)
+ data3 <- gsub("PC방방","PC방",data3)
+ write(unlist(data3),"job_5.txt") 
+ data4 <- read.table("job_5.txt")
+ wordcount <- table(data4) 
+ bchart <- head(sort(wordcount, decreasing=T),10)
+ bplot <- barplot(bchart,  main = "50대 창업 관련 키워드 분석     ", col = rainbow(10), 
+        cex.names=0.7, las = 2,ylim=c(0,150))
+ pct <- round(bchart/sum(bchart) * 100 ,1)
+ text(x = bplot, y = bchart*1.05, labels = paste("(",pct,"%",")"), col = "black", cex = 0.7)
+ text(x = bplot, y = bchart*0.85, labels = paste(bchart,"건"), col = "black", cex = 0.7)

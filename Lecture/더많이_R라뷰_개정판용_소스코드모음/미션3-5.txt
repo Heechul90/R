@@ -1,0 +1,88 @@
+#[ 미션 3-5 답 ]
+#[결과 1의 답]
+
+ setwd("c:\\r_temp") 
+ dis <- read.csv("1군전염병발병현황_년도별.csv",sep=",",
+                      stringsAsFactors = FALSE)  
+ colname <- dis$년도별
+  
+ v1 <- dis[,2]
+ v2 <- dis[,3]
+ v3 <- dis[,4]
+ v4 <- dis[,5]
+ v5 <- dis[,6]
+   
+  plot(v1,xlab="",ylab="",ylim=c(0,6000),axes=FALSE,col="violet",type="o",lwd=2,
+       main="1군 전염병 발병현황-년도별(단위:건수)  출처:통계청")
+  
+ axis(1,at=1:11,label=colname,las=2)
+ axis(2,las=1)
+   
+ lines(v2 ,col="blue",type="o",lwd=2)
+ lines(v3 ,col="red",type="o",lwd=2)
+ lines(v4 ,col="black",type="o",lwd=2)
+ lines(v5 ,col="orange",type="o",lwd=2)
+  
+ abline(h=seq(0,6000,100),v=seq(1,11,1),lty=3,lwd=0.2)
+   
+ col <- names(dis[2:6])
+ colors <- c("violet","blue","red","black","orange")
+ legend(1,6000,col,cex=0.8,col=colors,lty=1,lwd=2,bg="white")
+ 
+ savePlot("dis1.png",type="png")
+
+
+
+
+#[ 결과 2 의 답 ]
+
+ setwd("c:\\r_temp") 
+ dis <- read.csv("1군전염병발병현황_월별.csv",sep=",",
+                      stringsAsFactors = FALSE)  
+ colname <- dis$월별
+  
+ v1 <- dis[,2]
+ v2 <- dis[,3]
+ v3 <- dis[,4]
+ v4 <- dis[,5]
+ v5 <- dis[,6]
+   
+  plot(v1,xlab="",ylab="",ylim=c(0,1500),axes=FALSE,col="violet",type="o",lwd=2,
+       main="1군 전염병 발병현황-월별(단위:건수)  출처:통계청")
+  
+ axis(1,at=1:12,label=colname,las=2)
+ axis(2,las=1)
+   
+ lines(v2 ,col="blue",type="o",lwd=2)
+ lines(v3 ,col="red",type="o",lwd=2)
+ lines(v4 ,col="black",type="o",lwd=2)
+ lines(v5 ,col="orange",type="o",lwd=2)
+  
+ abline(h=seq(0,1500,100),v=seq(1,12,1),lty=3,lwd=0.2)
+   
+ col <- names(dis[2:6])
+ colors <- c("violet","blue","red","black","orange")
+ legend(10.5,1500,col,cex=0.8,col=colors,lty=1,lwd=2,bg="white")
+ 
+ savePlot("dis2.png",type="png")
+
+#[ 결과 3의 답 ]
+ dis <- read.csv("1군전염병발병현황_년도별.csv",sep=",", stringsAsFactors = FALSE)
+ colname <- dis$년도별 
+ v1 <- dis[,2]
+ v2 <- dis[,3]
+ v3 <- dis[,4]
+ v4 <- dis[,5]  
+ plot(v1,xlab="",ylab="",ylim=c(0,1500),axes=FALSE,col="violet",type="o",lwd=2,
+       main="1군 전염병 발병현황-년도별(단위:건수)  출처:통계청")
+ axis(1,at=1:11,label=colname,las=2)
+ axis(2,las=1)   
+ lines(v2 ,col="blue",type="o",lwd=2)
+ lines(v3 ,col="red",type="o",lwd=2)
+ lines(v4 ,col="black",type="o",lwd=2) 
+ abline(h=seq(0,1500,100),v=seq(1,12,1),lty=3,lwd=0.2)  
+ col <- names(dis[2:5])
+ colors <- c("violet","blue","red","black","orange")
+ legend(10,1500,col,cex=0.8,col=colors,lty=1,lwd=2,bg="white")
+ savePlot("dis3.png",type="png")
+

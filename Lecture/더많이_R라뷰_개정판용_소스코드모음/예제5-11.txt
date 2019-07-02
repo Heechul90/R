@@ -1,0 +1,4 @@
+#¿¹Á¦ 5-11
+ 
+ gbar <- gvisBarChart(fruits)
+ plot(gbar)

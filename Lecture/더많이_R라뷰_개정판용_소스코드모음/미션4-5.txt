@@ -1,0 +1,18 @@
+#[ 미션 4-5 답 ]
+
+setwd("c:\\r_temp")
+library(ggplot2)
+library(ggmap)
+
+ loc <- read.csv("서울지하철2호선위경도정보.csv",header=T)
+ loc2 <- read.csv("서울지하철3호선역위경도정보.csv",header=T)
+ lab_name <- c("2호선","3호선")
+ lab_color <- c("green","red")
+ center <- c(mean(loc2$LON)-0.03, mean(loc2$LAT))
+ kor <- get_map(center, zoom=11, maptype = "roadmap")
+ kor.map <- ggmap(kor)+geom_point(data=loc, aes(x=LON, y=LAT),size=3,color="green")+
+                       geom_point(data=loc2,aes(x=LON, y=LAT),size=3,color="red")
+ kor.map + geom_text(data=loc, aes(x = LON, y = LAT+0.005, label=역명),size=3) +
+           geom_text(data=loc2, aes(x = LON, y = LAT+0.005, label=역명),size=3 ) 
+ 
+ savePlot("lineplus_2.png",type="png")

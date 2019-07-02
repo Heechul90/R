@@ -1,0 +1,63 @@
+#예제 4-7
+ setwd("c:\\r_temp")
+ install.packages("RgoogleMaps")
+ library(RgoogleMaps)
+
+ # 지도위에 파이챠트를 그리기 위해 사용자정의 함수를 생성합니다.
+ PieOnStaticMap <- 
+ function(x, lat, lon, 
+ maptype=c("roadmap","satellite", "terrain", "hybrid")[4],
+ edges=200, clockwise=FALSE, init.angle=if (clockwise) 90 else 0,
+ col=NULL, alpha=0.6, title=NULL)
+ {
+  
+ filename <- "tmp.png" ## 지도 파일 다운로드 받아서 저장할 때 사용할 파일이름
+ center <- c(mean(lat), mean(lon))  ## 지도의 가운데 지점 설정
+ zoom <- min(MaxZoom(range(lat), range(lon)),15) ## 줌 비율 지정
+ 
+ MyMap <- GetMap(center=center, zoom=zoom, maptype=maptype, destfile=filename) 
+ tmp <- PlotOnStaticMap(MyMap, lat=lat, lon=lon, type="n", add=F)
+  
+ locs=LatLon2XY.centered(MyMap, lat, lon)
+ 
+ # 여기서부터 pie chart 관련 설정 시작입니다 
+ col <- c("red", "blue") # 파이 색깔 지정
+ radius <- margin.table(x, 1)/max(margin.table(x, 1)) * MyMap$zoom * 2 # 파이 크기 지정
+ 
+ x <- prop.table(x, 1)
+
+ x <- apply(x, 1, function(t) c(0, cumsum(t)/sum(t)))
+
+ dx <- diff(x)
+
+ nx <- apply(dx, 2, length)
+
+ t2xy <- function(t, radius) {
+ t2p <- ifelse(clockwise, -2, 2) * pi * t + init.angle * pi/180
+ list(x = radius * cos(t2p), y = radius * sin(t2p))
+      }
+   for (i in 1L:NCOL(x)) {
+     cols <- rep(col, length.out=nx[i])
+     for (j in 1:nx[i]) {
+       n <- max(2, floor(edges * dx[j, i]))
+       P <- t2xy(seq.int(x[j, i], x[j + 1, i], length.out=n), radius[i])
+  polygon(c(P$x, 0)+locs$newX[i], c(P$y, 0)+locs$newY[i], border="#00000000", col=cols[j])
+     }
+   }
+ }
+ 
+ pop <- read.csv("지역별인구현황_2014_4월기준.csv",header=T)
+ pop1 <- pop$남자인구수
+ pop2 <- pop$여자인구수
+ x <- cbind(pop1, pop2)
+ lat <- pop$LAT
+ lon <- pop$LON
+ 
+ PieOnStaticMap(x, lat, lon, maptype="terrian")
+ legend(-180,300 ,"한국 지역별 인구 분포 현황-2014년 기준",
+        cex=0.8,fill=NA,border=NA,bg="white",
+        text.col="red",text.font=2,box.col="red")
+ lab_sex <- c("남자","여자")
+ lab_color <- c("red","blue")
+ legend (150,300,lab_sex,fill=lab_color,bg="white")
+ savePlot("map_pop.png",type="png")

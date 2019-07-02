@@ -1,0 +1,9 @@
+#¿¹Á¦ 5-19
+
+library(googleVis)
+Stock
+achart <- gvisAnnotationChart(Stock,datevar="Date",numvar="Value",idvar="Device",
+            titlevar="Title",annotationvar="Annotation",
+            options=list(width=1000,height=500,fill=10, displayExactValues=TRUE,
+                         colors="['red','blue']"))
+plot(achart)

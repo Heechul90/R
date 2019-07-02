@@ -1,0 +1,12 @@
+#¿¹Á¦ 5-6
+
+ setwd("c:\\r_temp")
+ install.packages("googleVis")
+ library(googleVis)
+ data(Andrew)
+ Andrew
+ storm1 <- gvisMap(Andrew, "LatLong" , "Tip",
+               options=list(showTip=TRUE, showLine=TRUE, enableScrollWheel=TRUE,
+                            mapType='hybrid', useMapTypeControl=TRUE,
+                            width=800,height=400))
+ plot(storm1)

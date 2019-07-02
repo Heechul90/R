@@ -1,0 +1,27 @@
+#예제 5-10
+ 
+ library(googleVis)
+ fruits=data.frame(month=c("JAN","FEB","MAR"),
+                   apple=c(30,10,20),
+                   orange=c(20,40,30))
+ line <- gvisLineChart(fruits)
+ plot(line)
+
+#아래 그림은 양쪽 면에 y 축 표시하기 입니다.
+
+ line2 <- gvisLineChart(fruits,"month",c("apple","orange"),
+          option=list(series="[{targetAxisIndex:0},
+                              {targetAxisIndex:1}]",
+          vAxes="[{title:'apple'},{title:'orange'}]" ))
+
+ plot(line2)
+
+#아래 그림은 선 모양을 변경하는 예 입니다.
+
+ line3 <- gvisLineChart(fruits,xvar="month",yvar=c("apple","orange"),
+          options=list(series="[{color:'blue',targetAxisIndex:0,
+                                 linewidth:1,lineDashStyle:[1,10,1,10,1,10]},
+                                {color:'red',targetAxisIndex:1,
+                                 linewidth:2,lineDashStyle:[4,1]}]",
+                       vAxes="[{title:'apple'},{title:'orange'}]" ))
+ plot(line3)

@@ -1,0 +1,12 @@
+#[ 미션 4-1 답 ]
+
+setwd("c:\\r_temp")
+gu <- read.csv("서울시구청위치정보_new.csv",header=T)
+gu
+
+gu2 <- get_map("seoul", zoom=11, maptype = "hybrid")
+
+gu.map <- ggmap(gu2)+geom_point(data=gu, aes(x=LON, y=LAT),size=5,
+         alpha=1,color="green")
+gu.map + geom_text(data=gu, aes(x = LON, y = LAT+0.01, label=name),size=3)
+ggsave("goffice.png",dpi=500)

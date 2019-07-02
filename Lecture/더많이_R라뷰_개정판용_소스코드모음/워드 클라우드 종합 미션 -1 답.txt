@@ -1,0 +1,38 @@
+#[ 워드 클라우드 종합 미션 -1 답 ]
+
+setwd("c:\\r_temp")  
+install.packages("KoNLP") 
+install.packages("wordcloud") 
+install.packages("RColorBrewer")
+install.packages(“stringr”)
+library(stringr)
+library(KoNLP)  
+library(wordcloud)
+yeca_1 <- readLines("yeca_1.txt") 
+order <- sapply(yeca_1,extractNoun,USE.NAMES=F)
+yeca_2 <- unlist(order) 
+yeca_2
+yeca_2 <- str_replace_all(yeca_2,"[^[:alpha:]]","")
+yeca_3 <- Filter(function(x) {nchar(x) >= 2} ,yeca_2) 
+yeca_3 <- gsub("\\n","",yeca_3)
+yeca_3 <- gsub("\\d+","",yeca_3)
+txt <- readLines("yecagsub.txt")
+cnt_txt <- length(txt)
+cnt_txt
+for( i in 1:cnt_txt) {
+     yeca_3 <-gsub((txt[i]),"",yeca_3)     
+      }
+yeca_3 <- Filter(function(x) {nchar(x) >= 2} ,yeca_3)
+head(unlist(yeca_3), 20)
+write(unlist(yeca_3),"yeca_2.txt") 
+yeca_4 <- read.table("yeca_2.txt") 
+nrow(yeca_4) 
+wordcount <- table(yeca_4)
+head(sort(wordcount, decreasing=T),20)
+library(RColorBrewer) 
+palete <- brewer.pal(9,"Set1") 
+wordcloud(names(wordcount),freq=wordcount,scale=c(5,0.5),rot.per=0.25,min.freq=1,
+ random.order=F,random.color=T,colors=palete)
+ legend(0.3,1 ,"공동구매 요청내역 분석       ",cex=0.8,fill=NA,border=NA,bg="white" ,
+      text.col="red",text.font=2,box.col="red")
+

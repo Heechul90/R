@@ -1,0 +1,29 @@
+#예제 6-1
+
+#[결과 화면 1 답]
+
+setwd("c:\\r_temp")
+install.packages("ggplot2")  
+library(ggplot2)
+
+score <- read.csv("상반기사원별월별실적현황_new.csv ",header=T)
+ score
+
+ graph <- ggplot(score,aes(factor(이름),실적금액))+geom_boxplot()
+ graph
+ savePlot("score_1.png",type="png")
+
+#[ 결과 화면 2 답 ] 
+#위 결과 화면 1은 사각 박스내에 데이터가 어떻게 분포되어 있는지를 알 수 없습니다.
+#그래서 geom_jitter( ) 함수를 사용하여 아래와 같이 분포 내역까지 출력 할 수 있습니다.
+
+ graph2 <- ggplot(score,aes(factor(이름),실적금액))+geom_boxplot() + geom_jitter()
+ graph2
+ savePlot("score_2.png",type="png")
+
+#[ 결과 화면 3 답 ]
+#만약 boxplot() 안에 색상을 넣고 싶으면 아래와 같이 하면 됩니다.
+
+ graph3 <- ggplot(score,aes(factor(이름),실적금액))+geom_boxplot(aes(fill=(이름)))
+ graph3
+ savePlot("score_3.png",type="png")

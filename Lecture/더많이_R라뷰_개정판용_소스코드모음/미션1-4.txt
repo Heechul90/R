@@ -1,0 +1,151 @@
+#[ 미션 1-3 답 ]
+
+#[ 20대 창업 관련 분석 소스 코드 ]
+
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(stringr)
+ library(KoNLP)  
+ library(wordcloud)
+ useSejongDic() 
+ data1 <- readLines("job_20.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ data3 <- gsub("쇼핑","쇼핑몰",data3)
+ txt <- readLines("창업gsub.txt")
+ cnt_txt <- length(txt)
+ cnt_txt
+ for( i in 1:cnt_txt) {
+     data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3)
+ write(unlist(data3),"job_20.txt") 
+ data4 <- read.table("job_20.txt")
+ wordcount <- table(data4) 
+ head(sort(wordcount, decreasing=T),20)
+ library(RColorBrewer) 
+ palete <- brewer.pal(9,"Set3") 
+ wordcloud(names(wordcount),freq=wordcount,scale=c(7,0.8),rot.per=0.25,min.freq=3,
+ random.order=F,random.color=T,colors=palete)
+ legend(0.3,1 ,"20대 창업 관련 키워드 분석       ",cex=0.8,fill=NA,border=NA,bg="white" ,
+ text.col="red",text.font=2,box.col="red")
+
+#[ 30대 창업 관련 분석 소스 코드 ]
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(stringr)
+ library(KoNLP)  
+ library(wordcloud)
+ useSejongDic() 
+ data1 <- readLines("job_30.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ txt <- readLines("창업gsub.txt")
+ cnt_txt <- length(txt)
+ cnt_txt
+ for( i in 1:cnt_txt) {
+     data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3)
+ data3 <- gsub("프렌차이즈","프랜차이즈",data3)
+ data3 <- gsub("음식","요식업",data3)
+ data3 <- gsub("커피숍","카페",data3)
+ write(unlist(data3),"job_3.txt") 
+ data4 <- read.table("job_3.txt")
+ nrow(data4) 
+ wordcount <- table(data4) 
+ head(sort(wordcount, decreasing=T),20)
+ library(RColorBrewer) 
+ palete <- brewer.pal(9,"Set3") 
+ wordcloud(names(wordcount),freq=wordcount,scale=c(5,1),rot.per=0.25,min.freq=1,
+ random.order=F,random.color=T,colors=palete)
+ legend(0.3,1 ,"30대 창업 관련 키워드 분석       ",cex=0.8,fill=NA,border=NA,bg="white" ,
+    text.col="red",text.font=2,box.col="red")
+
+#[ 40대 창업 관련 분석 소스 코드 ]
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(stringr)
+ library(KoNLP)  
+ library(wordcloud)
+ useSejongDic() 
+ data1 <- readLines("job_40.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ data3 <- gsub("컴퓨터","PC방",data3)
+ data3 <- gsub("PC","PC방",data3)
+ data3 <- gsub("pc","PC방",data3)
+ data3 <- gsub("피시방","PC방",data3)
+ data3 <- gsub("PC방 이","PC방",data3)
+ data3 <- gsub("PC방방","PC방",data3)
+ data3 <- gsub("프렌차이즈","프랜차이즈",data3)
+ txt <- readLines("창업gsub.txt")
+ cnt_txt <- length(txt)
+ for( i in 1:cnt_txt) {
+     data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3)
+ write(unlist(data3),"job_4.txt") 
+ data4 <- read.table("job_4.txt")
+ wordcount <- table(data4) 
+ head(sort(wordcount, decreasing=T),20)
+ library(RColorBrewer) 
+ palete <- brewer.pal(9,"Set3") 
+ wordcloud(names(wordcount),freq=wordcount,scale=c(5,1),rot.per=0.25,min.freq=1,
+ random.order=F,random.color=T,colors=palete)
+ legend(0.3,1 ,"40대 창업 관련 키워드 분석       ",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+
+#[ 50대 창업 관련 분석 소스 코드 ]
+ setwd("c:\\r_temp")  
+ install.packages("KoNLP") 
+ install.packages("wordcloud") 
+ install.packages("stringr")
+ library(stringr)
+ library(KoNLP)  
+ library(wordcloud)
+ useSejongDic() 
+ data1 <- readLines("job_50.txt") 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- str_replace_all(data3,"[^[:alpha:]]","")
+ txt <- readLines("창업gsub.txt")
+ cnt_txt <- length(txt)
+ cnt_txt
+ for( i in 1:cnt_txt) {
+     data3 <-gsub((txt[i]),"",data3)     
+      }
+ data3 <- gsub("pc","PC방",data3)
+ data3 <- gsub("PC","PC방",data3)
+ data3 <- gsub("컴퓨터","PC방",data3)
+ data3 <- gsub("피시방","PC방",data3)
+ data3 <- gsub("PC방방","PC방",data3)
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3)
+ write(unlist(data3),"job_5.txt") 
+ data4 <- read.table("job_5.txt")
+ wordcount <- table(data4) 
+ head(sort(wordcount, decreasing=T),20)
+ library(RColorBrewer) 
+ palete <- brewer.pal(9,"Set3") 
+ wordcloud(names(wordcount),freq=wordcount,scale=c(5,1),rot.per=0.25,min.freq=1,
+ random.order=F,random.color=T,colors=palete)
+ legend(0.3,1 ,"50대 창업 관련 키워드 분석       ",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")
+

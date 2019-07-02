@@ -1,0 +1,9 @@
+#예제 5-16
+ 
+ setwd("c:\\r_temp")
+ library(googleVis)
+ korean <- read.csv("학생별회차별성적__국어_new.csv",header=T)
+ korean
+
+ area <- gvisAreaChart(korean,options=list(height=400,weight=500 ))
+ plot(area)

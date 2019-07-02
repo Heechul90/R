@@ -1,0 +1,17 @@
+#¿¹Á¦ 5-18
+ 
+ name <- c('Angela Bassett','Jessica Lange','Winona Ryder','Michelle Pfeiffer',
+          'Whoopi Goldberg','Emma Thompson','Julia Roberts','Sharon Stone','Meryl Streep',
+           'Susan Sarandon','Nicole Kidman')
+ 
+ pemp <- c(NA,'Angela Bassett','Jessica Lange','Winona Ryder','Winona Ryder',
+          'Angela Bassett','Emma Thompson', 'Julia Roberts','Angela Bassett',
+          'Meryl Streep','Susan Sarandon')
+ 
+ pay <- c(100,200,300,400,500,600,700,800,900,1000,1100)
+ 
+ emp <- data.frame(NAME=name,PNAME=pemp, PAY=pay)
+ 
+ Org <- gvisOrgChart(emp,idvar="NAME",parentvar="PNAME",
+ options=list(width=600, height=250,size='middle', allowCollapse=TRUE))
+ plot(Org)

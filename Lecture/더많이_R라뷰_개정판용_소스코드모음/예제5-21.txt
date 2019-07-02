@@ -1,0 +1,26 @@
+#¿¹Á¦ 5-21
+
+ dat <- data.frame(Term=c("1","2","3"),
+ President=c("Whasington", "Adams", "Jefferson"),
+ start=as.Date(x=c("1789-03-29", "1797-02-03", "1801-02-03")),
+ end=as.Date(x=c("1797-02-03", "1801-02-03", "1809-02-03")))
+
+ tl <- gvisTimeline(data=dat[,-1], rowlabel="President",
+ start="start", end="end")
+
+
+ tl <- gvisTimeline(data=dat, barlabel="President",
+ start="start", end="end")
+ plot(tl)
+
+
+ dat <- data.frame(Room=c("Class 1","Class 2","Class 3"),
+ Language=c("English Team", "German Team", "French Team"),
+ start=as.POSIXct(c("2015-09-14 14:00", "2015-09-14 15:00",
+ "2015-09-14 14:30")),
+ end=as.POSIXct(c("2015-09-14 15:00", "2015-09-14 16:00",
+ "2015-09-14 15:30")))
+ 
+ tl <- gvisTimeline(data=dat, rowlabel="Rev_Team",
+ start="start", end="end")
+ plot(tl)

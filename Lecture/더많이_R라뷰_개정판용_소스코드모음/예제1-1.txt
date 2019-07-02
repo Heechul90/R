@@ -1,0 +1,62 @@
+setwd("c:\\r_temp") 
+install.packages("KoNLP") 
+install.packages("wordcloud") 
+library(KoNLP) 
+library(wordcloud)
+useSejongDic() 
+ 
+data1 <- readLines("seoul_new.txt") 
+data1 
+data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+data2
+head(unlist(data2), 30) 
+data3 <- unlist(data2) 
+
+data3 <- gsub("\\d+","", data3) ##  <--- 모든 숫자 없애기
+data3 <- gsub("서울시","", data3) 
+data3 <- gsub("서울","", data3)  
+data3 <- gsub("요청","", data3)  
+data3 <- gsub("제안","", data3) 
+data3 <- gsub(" ","", data3)
+data3 <- gsub("-","",data3)
+data3
+write(unlist(data3),"seoul_2.txt") 
+
+data4 <- read.table("seoul_2.txt")
+data4
+nrow(data4) 
+head(sort(wordcount, decreasing=T),20)
+
+data3 <- gsub("OO","",data3)
+data3 <- gsub("개선","", data3)
+data3 <- gsub("문제","", data3)
+data3 <- gsub("관리","", data3)
+data3 <- gsub("민원","", data3)
+data3 <- gsub("이용","", data3)
+data3 <- gsub("관련","", data3)
+data3 <- gsub("시장","", data3)
+
+#=============================================================
+#Tip : 위의 data3 <- gsub( ) 부분이 많이 반복되어서 힘들죠?
+# 제거하고 싶은 단어를 파일에 저장한 후 아래와 같이 반복문으로 해결하면 됩니다.
+# 이 예에서는 작업 디렉토리의 gsubfile.txt 로 저장했습니다.
+#> txt <- readLines("gsubfile.txt")
+#> txt
+#> cnt_txt <- length(txt)
+#> cnt_txt
+#> for( i in 1:cnt_txt) {
+#      data3 <-gsub((txt[i]),"",data3)     
+#      }
+#> data3   ?-- 제거되어 있을 거예요~
+#=============================================================
+
+write(unlist(data3),"seoul_3.txt")
+data4 <- read.table("seoul_3.txt")
+wordcount <- table(data4)
+head(sort(wordcount, decreasing=T),20)
+library(RColorBrewer) 
+palete <- brewer.pal(9,"Set3") 
+wordcloud(names(wordcount),freq=wordcount,scale=c(5,1),rot.per=0.25,min.freq=1,
+random.order=F,random.color=T,colors=palete)
+legend(0.3,1 ,"서울시 응답소 요청사항 분석",cex=0.8,fill=NA,border=NA,bg="white" ,
+       text.col="red",text.font=2,box.col="red")

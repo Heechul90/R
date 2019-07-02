@@ -1,0 +1,35 @@
+#[ 워드 클라우드 종합 미션 -2 답 ]
+
+
+setwd("c:\\r_temp")  
+install.packages("KoNLP") 
+install.packages("wordcloud") 
+install.packages("RColorBrewer")
+install.packages(“stringr”)
+library(stringr)
+library(KoNLP)  
+library(wordcloud)
+
+myray_1 <- readLines("new_myray.txt") 
+myray_2 <- sapply(myray_1,extractNoun,USE.NAMES=F)
+myray_2
+my_ray3 <- unlist(myray_2) 
+my_rat3 <- str_replace_all(my_ray_2,"[^[:alpha:]]","")
+my_ray3 <- Filter(function(x) {nchar(x) >= 2} ,my_ray3) 
+my_ray3
+my_ray3 <- gsub(" ","-",my_ray3)  
+my_ray3 <- gsub("ㅠㅠ","",my_ray3) 
+my_ray3 <- gsub("\\d+","",my_ray3) 
+my_ray3 <- gsub("\\.","",my_ray3)   
+
+write(unlist(my_ray3),"myray_2.txt") 
+rev <- read.table("myray_2.txt")
+wordcount <- table(rev)
+head(sort(wordcount, decreasing=T),20)
+
+library(RColorBrewer) 
+palete <- brewer.pal(9,"Set1") 
+wordcloud(names(wordcount),freq=wordcount,scale=c(5,0.5),rot.per=0.25,min.freq=2,
+ random.comp=F,random.color=T,colors=palete)
+legend(0.3,1 ,"고객 불만 게시판 분석       ",cex=0.8,fill=NA,border=NA,bg="white" ,
+      text.col="red",text.font=2,box.col="red")

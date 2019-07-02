@@ -1,0 +1,113 @@
+#[ 미션 3-2 답 ]
+
+ setwd("c:\\r_temp")  
+
+# 저자의 경우는 64비트용 R 이라서 Excel 데이터를 가져오기 위해 XLConnect 사용함
+# 32비트용 R 일 경우는 아래의 32비트 부분을 사용하세요.
+
+# 여기서부터는 64비트용 R 에서만 하는 작업입니다.
+ install.packages("XLConnect")
+ library("XLConnect")
+ xls = loadWorkbook('청소년통계.xls',create=TRUE)
+ teenager2 = readWorksheet(xls,sheet="고민문제")
+ teenager3 = readWorksheet(xls,sheet="음주흡연율")
+ teenager4 = readWorksheet(xls,sheet="학교생활만족도")
+ teenager5 = readWorksheet(xls,sheet="학교폭력")
+ teenager6 = readWorksheet(xls,sheet="직업선택요인")
+ teenager7 = readWorksheet(xls,sheet="선호하는직장")
+# 여기까지는 64비트용 R에서만 하는 작업입니다.
+
+# 여기서부터는 32비트용 R 에서만 하는 작업입니다.
+# 32비트용 R 을 사용중일 경우 위의 64비트에서만 하는 부분 대신 이 부분을 사용하세요
+ install.packages("RODBC")
+ library("RODBC")
+ xls = odbcConnectExcel('청소년통계.xls')
+ data=sqlTables(xls)
+ teenager2 = sqlQuery(xls,"select * from  [고민문제$]",as.is=T)
+ teenager3 = sqlQuery(xls,"select * from  [음주흡연율$]",as.is=T)
+ teenager4 = sqlQuery(xls,"select * from  [학교생활만족도$]",as.is=T)
+ teenager5 = sqlQuery(xls,"select * from  [학교폭력$]",as.is=T)
+ teenager6 = sqlQuery(xls,"select * from  [직업선택요인$]",as.is=T)
+ teenager7 = sqlQuery(xls,"select * from  [선호하는직장$]",as.is=T)
+# 여기까지는 32비트용 R에서만 하는 작업입니다.
+# 위의 방법으로 엑셀에 있는 데이터를 R 로 불러 왔으면 아래와 같이 그래프로 출력합니다.
+                         
+ par(mfrow=c(3,2))  # 3행 2열 로 그래프 배치하기
+
+# 주요 고민거리 그래프 그리기
+ bp2 <- barplot(as.matrix(teenager2),main="주요 고민거리",
+  beside=T,axes=F,ylab="비율(%)",xlab="항목", cex.names=1.0, 
+  ylim=c(0,40), col=c("skyblue","plum"), border="white",las=2,
+ names.arg=c("외모","가정환경","용돈","성적","직업","친구","이성교제","흡연","기타","고민없음"))
+
+ axis(2,ylim=seq(0,40,10),las=1)
+ abline(h=seq(0,40,5),lty=2)
+ pct <- as.matrix(teenager2)
+ text(x=bp2,y=as.matrix(teenager2)*1.05,labels=paste(pct,"%"),col="navy",cex=0.7)
+ legend("topright",c("남자","여자"),cex=0.9,fill=c("skyblue","plum"),bg="white")
+
+# 흡연율/음주율 그래프 그리기
+ bp3 <- barplot(as.matrix(teenager3),main="흡연율 / 음주율",beside=T,axes=F,
+   ylab="비율(%)",xlab="연도(년)", cex.names=1.2, ylim=c(0,40), 
+   col=c("gray","tan"), border="white", las=2,
+    names.arg=c("2009","2010","2011","2012","2013"))
+
+ axis(2,ylim=c(0,10,20,30,40),las=1)
+ abline(h=seq(0,40,5),lty=2)
+ pct <- as.matrix(teenager3)
+ text(x=bp3,y=as.matrix(teenager3)*1.05,labels=paste(pct,"%"),col="navy",cex=0.7)
+ legend("topright",c("흡연","음주"),cex=0.9,fill=c("gray","tan"), bg="white")
+
+# 학교생활 만족도 그래프 그리기
+ bp4 <- barplot(as.matrix(teenager4),main="학교 생활 만족도",beside=T,axes=F,
+   ylab="비율(%)",xlab="만족도", cex.names=1.2, ylim=c(0,60), 
+   col=c("limegreen","gold"), border="white",las=2,
+   names.arg=c("매우만족","만족","보통","불만족","매우불만족"))
+
+ axis(2,ylim=c(0,10,20,30,40,50,60),las=1)
+ abline(h=seq(0,60,5),lty=2)
+ pct <- as.matrix(teenager4)
+ text(x=bp4,y=as.matrix(teenager4)*1.05,labels=paste(pct,"%"),col="navy",cex=0.7)
+ legend("topright",c("중학생","고등학생"),cex=0.9,fill=c("limegreen","gold"), bg="white")
+
+# 학교폭력 사유 그래프 그리기
+ bp5 <- barplot(as.matrix(teenager5),main="학교 폭력 사유",beside=T,axes=F,
+ ylab="비율(%)",xlab="피해 사유", cex.names=1.0, ylim=c(0,60), 
+ col=c("skyblue","plum","limegreen","gold"), border="white",las=2 ,
+ names.arg=c("피해경험","이유없다","약해서","잘못해서","외모/장애","성격","금품요구불응","기타"))
+
+ axis(2,ylim=c(0,10,20,30,40,50,60),las=1)
+ abline(h=seq(0,60,5),lty=2)
+ pct <- as.matrix(teenager5)
+ text(x=bp5,y=as.matrix(teenager5)*1.05,labels=paste(pct,"%"),col="navy",cex=0.7)
+ legend("topright",c("남자","여자","중학생","고등학생"),cex=0.9,
+ fill=c("skyblue","plum","limegreen","gold"), bg="white")
+
+# 직업 선택 요인 그래프 그리기
+ bp6 <- barplot(as.matrix(teenager6),main="직업 선택 요인",beside=T,axes=F,
+  ylab="비율(%)",xlab="항목", cex.names=1.0, ylim=c(0,50), 
+  col=c("skyblue","plum","limegreen","gold","blue"), border="white", las=2 ,
+  names.arg=c("명예/명성","안정성","수입","적성/흥미","보람/자아성취","발전가능성","기타"))
+
+ axis(2,ylim=c(0,10,20,30,40,50),las=1)
+ abline(h=seq(0,50,5),lty=2)
+ pct <- as.matrix(teenager6)
+ text(x=bp6,y=as.matrix(teenager6)*1.05,labels=paste(pct,"%"),col="navy",cex=0.7)
+ legend("topright",c("남자","여자","중학생","고등학생","대학생"),cex=0.9,
+  fill=c("skyblue","plum","limegreen","gold","blue"), bg="white")
+
+# 직장 선호도 그래프 그리기
+ bp7 <- barplot(as.matrix(teenager7),main="직장 선호도",beside=T,axes=F,ylab="비율(%)",
+ xlab="기업 종류",cex.names=1.0, ylim=c(0,40), 
+ col=c("skyblue","plum","limegreen","gold","blue"), 
+ border="white", las=2 ,
+ names.arg=c("국가기관","공기업","대기업","벤처","외국계","전문직","중소기업","해외","자영업","기타"))
+
+ axis(2,ylim=c(0,10,20,30,40),las=1)
+ abline(h=seq(0,40,5),lty=2)
+ pct <- as.matrix(teenager7)
+ text(x=bp7,y=as.matrix(teenager7)*1.05,labels=paste(pct,"%"),col="navy",cex=0.7)
+ legend("topright",c("남자","여자","중학생","고등학생","대학생"),cex=0.9,
+ fill=c("skyblue","plum","limegreen","gold","blue"), bg="white")
+
+

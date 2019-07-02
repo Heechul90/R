@@ -1,0 +1,48 @@
+#[ 그래프 종합 미션 -1 답 ]
+
+setwd("c:\\r_temp")
+alert1 <- readLines("oracle_alert_testdb.log") 
+alert2 <- grep("^ORA-+",alert1,value=T)  #ORA-12345 형식으로 된 줄만 걸러냄
+alert3 <- substr(alert2,5,9)   #ORA-12345 형식에서 숫자부분만 잘라냄
+
+ alert3
+
+alert4 <- gsub("[A-z]","",alert3)  # 영어가 있는 부분을 제거하고 숫자만 남겨둠
+head(unlist(alert4), 20)
+write(unlist(alert4),"alert_2.txt") 
+alert5<- read.table("alert_2.txt")
+wordcount <- table(alert5)
+head(sort(wordcount, decreasing=T),10)
+final <- head(sort(wordcount, decreasing=T),10)
+bp <- barplot(final,main = "많이 발생한 오라클 에러 코드-건별 출력", 
+      col = rainbow(10), cex.names=0.7, las = 2,ylim=c(0,4000))
+text(x = bp, y = final*1.05, labels = paste(final,"건"), col = "black", cex = 0.7)
+
+dev.new( )
+bp <- barplot(final,  main = "많이 발생한 오라클 에러 코드-비율별 출력", 
+      col = rainbow(10), cex.names=0.7,  las = 2 , ylim=c(0,4000))
+pct <- round(final/sum(final) * 100 ,1)
+text(x = bp, y = final*1.05, labels = paste(pct,"%"), col = "black", cex = 0.7)
+
+
+dev.new( )
+plot(final,xlab="",ylab="",ylim=c(0,4000),axes=FALSE,type="o",col="red",
+ main="많이 발생하는 오라클 에러-선그래프",lwd=2)
+axis(1,at=1:10,lab=names(final),las=2)
+axis(2,las=1)
+abline(h=seq(0,4000,100),v=seq(1,10,1),col="gray",lty=2)
+
+
+dev.new()
+par(mar=c(5,4,4,4)+0.1) # 그래프의 여백 조정하기
+bp <- barplot(final,main = "많이 발생한 오라클 에러 코드-종합", 
+       col = rainbow(10), cex.names=0.7, las = 2,ylim=c(0,4000))
+text(x = bp, y = final*1.05, labels = paste(final,"건"), col = "black", cex = 0.7)
+par(new=T) # 그래프를 겹쳐서 그립니다.
+plot(final,type="o",axes=F, ylab="",xlab="",ylim=c(0,4000),lty=2,col="blue") 
+pct <- round(final/sum(final) * 100 ,1)
+text(x = bp, y = final*1.15, labels = paste(pct,"%"), col = "black", cex = 0.7)
+ 
+axis(4,las=1) # 4번 측면에 새로운 축 그리기 (오른쪽 측면)
+mtext(side=4,line=2.5,"Line Chart") # 4번 측면에 글씨 쓰기
+abline(h=seq(0,4000,200),v=seq(1,10,1),col="gray",lty=2)

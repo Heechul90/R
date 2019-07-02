@@ -1,0 +1,20 @@
+#예제 5-12
+ 
+ setwd("c:\\r_temp")
+ library(googleVis)
+ CityPopularity
+ pie1 <- gvisPieChart(CityPopularity,options=list(width=400, height=300)) 
+ plot(pie1)
+
+
+# 도넛 차트 만들기
+
+ pie2 <- gvisPieChart(CityPopularity, options=list(
+         slices="{4: {offset: '0.2'}, 0: {offset: '0.3'}}",
+         title="City popularity",
+         legend="none",
+         pieSliceText="label",
+         pieHole="0.5",width=600))
+ plot(pie2)
+
+

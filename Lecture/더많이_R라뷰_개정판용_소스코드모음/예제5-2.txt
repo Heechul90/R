@@ -1,0 +1,8 @@
+#¿¹Á¦ 5-2
+
+setwd("c:\\r_temp")
+install.packages("googleVis")
+library(googleVis)
+Fruits
+Fruits1<- gvisMotionChart(Fruits, idvar="Fruit", timevar="Year")
+plot(Fruits1)

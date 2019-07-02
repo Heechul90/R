@@ -1,0 +1,7 @@
+#예제 5-4
+
+ line_2 <- read.csv("2호선_강남역_시간대별_승하차현황_세로.csv",header=T,sep=",")
+
+ t1 <- gvisMotionChart(line_2, idvar="line_no", timevar="time",
+              options=list(width=1000,height=500))
+ plot(t1)

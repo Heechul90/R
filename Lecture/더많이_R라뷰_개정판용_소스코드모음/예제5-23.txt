@@ -1,0 +1,36 @@
+#예제 5-23
+
+ tm <- gvisTreeMap(Regions, idvar="Region", parentvar="Parent",
+ sizevar="Val", colorvar="Fac")
+ plot(tm)
+
+
+#[ 색상을 다르게 설정하기 ]
+
+ tm2 <- gvisTreeMap(Regions, "Region", "Parent", "Val", "Fac",
+        options=list(width=600, height=500,
+        fontSize=13,
+        minColor='#EDF8FB',
+        midColor='#66C2A4',
+        maxColor='#006D2C',
+        headerHeight=20,
+        fontColor='black',
+        showScale=TRUE))
+ 
+ plot(tm2)
+
+#[ 미국 전체 주를 Treemap 으로 표시하기 ]
+
+ require(datasets)
+ states <- data.frame(state.name, state.area)
+ 
+ total=data.frame(state.area=sum(states$state.area), state.name="USA")
+ my.states <- rbind(total, states)
+ my.states$parent="USA"
+ 
+ my.states$parent[my.states$state.name=="USA"] <- NA
+ my.states$state.area.log=log(my.states$state.area)
+ 
+ statesTree <- gvisTreeMap(my.states, "state.name", "parent",
+ "state.area", "state.area.log")
+ plot(statesTree)

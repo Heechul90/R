@@ -1,0 +1,11 @@
+#¿¹Á¦ 5-13
+ 
+ setwd("c:\\r_temp")
+ library(googleVis)
+ OpenClose
+ candle <- gvisCandlestickChart(OpenClose, 
+           options=list(legend='none',height=400,width=500))
+ plot(candle)
+
+
+

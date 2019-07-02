@@ -1,0 +1,72 @@
+#[ 미션 3-1 결과 화면 1 답 ] 
+
+ setwd("c:\\r_temp")
+ data <- read.csv("야구성적.csv", header=T)
+ head(data,25)
+
+ bp <- barplot(data$연봉대비출루율, main=paste("야구 선수별 연봉 대비 출루율 분석","\n",
+       "(밥값여부계산 ^^;;)"), col=rainbow(25) ,
+        cex.names=0.7, las=2, names.arg=data$선수명, ylim=c(0,50))
+ 
+ title(ylab="연봉대비출루율", col.lab="red")
+
+ aver <- 0
+ for(i in 1:length(data$연봉대비출루율))
+    {
+      aver <- aver+data$연봉대비출루율[i]
+    }
+ aver
+ aver <- aver/length(data$연봉대비출루율)
+ aver
+
+ abline(h=aver, col="blue")
+ text(x=aver-11, y=14.5, col="black", cex=0.8, labels=paste(aver,'%',"(평균출루율)"))
+ text(x=bp*1.01, y=data$연봉대비출루율*1.05, col="black", cex=0.7, 
+    labels=paste(data$연봉대비출루율,'%'))
+ savePlot("baseball_bar.png",type="png")
+
+
+#[ 미션 3-1 결과 화면 2 답 ]
+# 이번에는 위 데이터를 나이팅게일 차트로 표현하겠습니다.
+
+ data <- read.csv("주요선수별성적-2013년.csv", header=T)
+ data
+ row.names(data) <- data$선수명
+ data2 <- data[,c(7,8,11,12,13,14,17,19)]
+ stars(data2,flip.labels=FALSE, draw.segment=TRUE, frame.plot=TRUE, full=TRUE, 
+      main=" 야구 선수별 주요 성적 분석-2013년 ")
+
+ savePlot("baseball_ny.png",type="png")
+
+ label <- names(data2)
+ val <- table(label)
+ color <- c("black","red","green","blue","cyan","violet","yellow","grey")
+ pie(val,labels=label,col=color, radius=0.1, cex=0.6) # 범례용 그래프 만들기
+ savePlot("baseball_regend.png",type="png")
+
+#[ 미션 3-1 결과 화면 3 답 ]
+
+ data4 <- data[,c(2,21,22)]
+ data4
+ line1 <- data$연봉대비출루율
+ line2 <- data$연봉대비타점율
+   
+ par(mar=c(5,4,4,4)+0.1) 
+  
+ plot(line1,type="o",axes=F, ylab="",xlab="",ylim=c(0,50),lty=2,col="blue", 
+      main="한국프로야구선수별 기록분석-2013년",lwd=2)
+   
+ axis(1,at=1:25,lab=data4$선수명,las=2)
+ axis(2,las=1)
+ par(new=T) 
+   
+ plot(line2,type="o",axes=F, ylab="",xlab="",ylim=c(0,50),lty=2,col="red")
+ axis(4,las=1) 
+ mtext(side=4,line=2.5,"연봉대비 타점율") 
+ mtext(side=2,line=2.5,"연봉대비 출루율") 
+ 
+ abline(h=seq(0,50,5),v=seq(1,25,1),col="gray",lty=2)
+ 
+ legend(18,50,names(data[21:22]),cex=0.8,col=c("red","blue"),lty=1,lwd=2,bg="white")
+ savePlot("baseball_4.png",type="png")
+

@@ -1,0 +1,10 @@
+#예제 5-7
+
+ setwd("c:\\r_temp")
+ loc <- read.csv("서울시구청위치정보_new.csv",header=T)
+ loc
+hoffice <- gvisMap(loc, "LATLON" , "name",
+    options=list(showTip=TRUE, showLine=TRUE, enableScrollWheel=TRUE,
+           mapType='normal', useMapTypeControl=TRUE,
+           width=1000,height=400))
+plot(hoffice)

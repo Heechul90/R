@@ -1,0 +1,35 @@
+#예제 4-5
+ setwd("c:\\r_temp")
+ library(ggmap)
+ library(grid)
+ pop <- read.csv("메르스환자발병현황2.csv",header=T)
+ lon <- pop$LON
+ lat <- pop$LAT
+ name <- pop$병원명
+ gubun <- pop$구분
+
+ df <- data.frame(name,lon,lat,gubun)
+ loc2 <- df$gubun
+ loc2
+
+ colors <- c()
+ for ( i in 1:length(loc2)) {
+  if (loc2[i] == '확진' ) {
+      colors <- c(colors,"red") }
+   else { 
+     colors <- c(colors,"blue") }
+  }
+
+ sizes <- c()
+ for ( i in 1:length(loc2)) {
+  if (loc2[i] == '확진' ) {
+      sizes <- c(sizes,6) }
+   else { 
+     sizes <- c(sizes,4) }
+  }
+
+ map1 <- get_map("muju",zoom=7 , maptype='roadmap')
+ map1 <- ggmap(map1)
+ map2 <- map1 + geom_point(aes(x=lon,y=lat),colour=colors,size=sizes,alpha=1,data=df)
+ map2
+ savePlot("메르스병원.png",type="png")

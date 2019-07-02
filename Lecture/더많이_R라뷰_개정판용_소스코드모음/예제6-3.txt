@@ -1,0 +1,25 @@
+#예제 6-3
+
+setwd("c:\\r_temp")
+library(ggplot2)
+score1 <- read.csv("빅데이터_3기학생시험결과_1조현황.csv ",header=T,
+          stringsAsFactors=FALSE)
+score1
+# 아래 그래프 작업의 핵심은 100% 달성을 1 로 보고 성취율을 "1-성취율"로 계산한것입니다.
+# 그래서 달성한 부분은 파란색으로 표시하고 1 - 성취율 부분은 빨간색으로 표시했습니다.
+# 아주 많이 사용되는 방법이므로 꼭 이해해야 합니다!
+
+ score2<- matrix(c(score1[1,6],1- score1 [1,6],
+                    score1[2,6],1- score1 [2,6], 
+                    score1[3,6],1- score1 [3,6],
+                    score1[4,6],1- score1 [4,6],
+                    score1[5,6],1- score1 [5,6],
+                    score1[6,6],1- score1 [6,6],
+                    score1[7,6],1- score1 [7,6]),2,7)
+ bp <- barplot(score2,names=c(score1[1,2], score1[2,2], score1[3,2],
+       score1[4,2], score1[5,2], score1[6,2], score1[7,2]),col=6:2,
+       main="학생별 점수 성취율",las=2)
+ abline(h=seq(0.05,0.95,0.05),col="white",lwd=2)
+ text(x=bp, y =score1$성취율*0.95, labels =paste(score1$성취율*100,"%"), col = "black", 
+     cex = 0.8)
+ savePlot("archive.png",type="png")

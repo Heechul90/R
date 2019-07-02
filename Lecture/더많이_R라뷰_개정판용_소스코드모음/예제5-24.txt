@@ -1,0 +1,42 @@
+#¿¹Á¦ 5-24
+
+ Pie1 <- gvisPieChart(CityPopularity)
+ Pie2 <- gvisPieChart(CityPopularity, options=list(
+ slices="{4: {offset: '0.2'}, 0: {offset: '0.3'}}",
+ title="City popularity",
+ legend="none",
+ pieSliceText="label",
+ pieHole="0.5",width=600))
+ plot(gvisMerge(Pie2, Pie1, tableOptions = "cellspacing=\"20\" bgcolor=\"#AABBCC\"",
+ horizontal=TRUE))
+
+
+ Geo <- gvisGeoChart(Exports, "Country", "Profit",
+ options=list(width=250, height=100))
+ 
+ Tble <- gvisTable(Exports,
+ options=list(width=250, height=300))
+ GT <- gvisMerge(Geo,Tbl, horizontal=FALSE)
+ plot(GT)
+
+ M <- gvisMotionChart(Fruits, "Fruit", "Year",
+ options=list(width=400, height=410))
+ 
+ GTM <- gvisMerge(GT, M, horizontal=TRUE,
+ tableOptions="cellspacing=10")
+ plot(GTM)
+
+
+ line <- gvisLineChart(OpenClose, "Weekday", c("Open", "Close"),
+        options=list(legend="none", width=300, height=150))
+ column <- gvisColumnChart(OpenClose, "Weekday", c("Open", "Close"),
+        options=list(legend="none", width=300, height=150))
+ area <- gvisAreaChart(OpenClose, "Weekday", c("Open", "Close"),
+        options=list(legend="none", width=300, height=150))
+ bar <- gvisBarChart(OpenClose, "Weekday", c("Open", "Close"),
+        options=list(legend="none", width=300, height=150))
+
+ lcab <- gvisMerge(gvisMerge(line, column), gvisMerge(area, bar),
+        horizontal=TRUE, tableOptions="bgcolor=\"#AABBCC\"")
+
+ plot(lcab)

@@ -1,0 +1,24 @@
+#[ 미션 3-7 답 ]
+
+
+setwd("c:\\r_temp")
+mapo09 <- read.csv("마포09번이용현황.csv",sep=",",stringsAsFactors = FALSE)
+mapo09
+incnt <- mapo09$승차인원
+outcnt <- mapo09$하차인원
+
+incnt
+
+outcnt
+plot(incnt,xlab="",ylab="",ylim=c(0,42000),axes=FALSE,type="o",col="red",
+     main="마포09번 이용 승객수(단위:명)  - 2014년 1월 기준")
+
+axis(1,at=1:32,lab=c(mapo09$정류소명),las=2)
+axis(2,las=1)
+abline(h=seq(0,40000,1000),v=seq(1,32,1),lty=2,color="gray")
+lines(outcnt,col="blue",type="o")
+
+colors <- c("red","blue")
+
+legend(25,40000,c("승차인원","하차인원"),cex=0.8,col=colors,lty=1,lwd=2,bg="white")
+savePlot("mapo09.png",type="png")

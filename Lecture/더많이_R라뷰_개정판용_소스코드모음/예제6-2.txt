@@ -1,0 +1,63 @@
+#예제 6-2
+
+ setwd("c:\\r_temp")
+ library(ggplot2)
+
+ a <- read.csv("빅데이터_3기학생시험결과_1조현황.csv",header=T,
+     stringsAsFactors=FALSE,sep=",")
+ a
+
+ dash_t <- function(x,q.1,q.3,title) {
+           i <- matrix(c(-1,0,0,1,1,0),3,2,byrow=T)
+           plot(i,xlab="",ylab="",axes=F,type="n")
+           x.cir <- cos(seq(0,180,1)*pi/180)
+           y.cir <- sin(seq(0,180,1)*pi/180)
+  
+           #첫번째 polygon
+           cir <- rbind(cbind(x.cir[(181-q.1):181],y.cir[(181-q.1):181]) ,
+                  cbind(0.8*x.cir[181:(181-q.1)],0.8*y.cir[181:(181-q.1)]),
+                  col="green")
+           polygon(cir,col="green",border="white")
+  
+           #두번째 polygon
+           cir <- rbind(cbind(x.cir[(q.3+1):(181-q.1)],y.cir[(q.3+1):(181-q.1)]) ,
+                  cbind(0.8*x.cir[(181-q.1):(q.3+1)],0.8*y.cir[(181-q.1):(q.3+1)]),
+                  col="blue")
+           polygon(cir,col="blue",border="white")
+  
+           #세번째 polygon
+           cir <- rbind(cbind(x.cir[1:(q.3+1)],y.cir[1:(q.3+1)]) ,
+                  cbind(0.8*x.cir[(q.3+1):1],0.8*y.cir[(q.3+1):1]),
+                  col="red")
+           polygon(cir,col="red",border="white")   
+        
+           for (i in 0:36) segments(0,0,cos(i*pi/36),sin(i*pi/36),col="white")
+           arrows(0,0.1,0.75*cos(pi-x*pi),0.75*sin(pi-x*pi),lwd=3,length=0.2)
+           text(0,0.1,"o",cex=3)
+           title(title)
+  } 
+  windows(height=4,width=6)
+  par(mfrow=c(3,3), oma=c(3,3,3,3),mar=c(1,1,1,2))
+ # 위 oma 값은 각 좌,우,상,하 의 간격입니다.
+
+dash_t(a[1,6],60,30,paste(a$이름[1],"의 성취도"))
+text(0,0.5,paste(a[1,6]*100,"%"),cex=1.5)
+
+dash_t(a[2,6],60,30,paste(a$이름[2],"의 성취도"))
+text(0,0.5,paste(a[2,6]*100,"%"),cex=1.5)
+
+dash_t(a[3,6],60,30,paste(a$이름[3],"의 성취도"))
+text(0,0.5,paste(a[3,6]*100,"%"),cex=1.5)
+
+dash_t(a[4,6],60,30,paste(a$이름[4],"의 성취도"))
+text(0,0.5,paste(a[4,6]*100,"%"),cex=1.5)
+
+dash_t(a[5,6],60,30,paste(a$이름[5],"의 성취도"))
+text(0,0.5,paste(a[5,6]*100,"%"),cex=1.5)
+
+dash_t(a[6,6],60,30,paste(a$이름[6],"의 성취도"))
+text(0,0.5,paste(a[6,6]*100,"%"),cex=1.5)
+
+dash_t(a[7,6],60,30,paste(a$이름[7],"의 성취도"))
+text(0,0.5,paste(a[7,6]*100,"%"),cex=1.5)
+ savePlot("accel.png",type="png")

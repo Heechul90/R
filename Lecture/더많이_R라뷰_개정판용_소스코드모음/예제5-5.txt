@@ -1,0 +1,8 @@
+#예제 5-5
+
+ setwd("c:\\r_temp")
+ library(googleVis)
+ sub58 <- read.csv("서울지하철_5-8호선_이용현황_시간대별.csv",header=T)
+ sub58
+ sub58_2 <- gvisMotionChart(sub58,idvar="호선명",timevar="시간")
+ plot(sub58_2)

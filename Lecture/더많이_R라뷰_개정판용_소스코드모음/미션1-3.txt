@@ -1,0 +1,63 @@
+#[ 미션 1-3 답 ]
+
+
+ setwd("c:\\r_temp")
+ install.packages("KoNLP")
+ install.packages("wordcloud")
+ library(KoNLP)
+ library("wordcloud")
+
+ data1 <- readLines("steve.txt") 
+ data1 
+ data2 <- sapply(data1,extractNoun,USE.NAMES=F)
+ data2
+ head(unlist(data2), 30) 
+ data3 <- unlist(data2) 
+ data3 <- Filter(function(x) {nchar(x) >= 2} ,data3) 
+ data3 <- gsub("\\d+","", data3)   
+ data3 <- gsub(" ","", data3)
+ write(unlist(data3),"steve_2.txt") 
+ data4 <- read.table("steve_2.txt")
+
+ nrow(data4) 
+ wordcount <- table(data4) 
+ head(sort(wordcount, decreasing=T),20)
+ data3 <- gsub("the","",data3)
+ data3 <- gsub("to","", data3)
+ data3 <- gsub("and","", data3)
+ data3 <- gsub("was","", data3)
+ data3 <- gsub("of","", data3)
+ data3 <- gsub("that","", data3)
+
+ data3 <- gsub("it","", data3)
+ data3 <- gsub("in","", data3)
+ data3 <- gsub("my","", data3)
+ data3 <- gsub("had","", data3)
+ data3 <- gsub("with","", data3)
+ data3 <- gsub("And","", data3)
+ data3 <- gsub("for","", data3)
+ data3 <- gsub("have","", data3)
+ data3 <- gsub("It","", data3)
+ data3 <- gsub("you","", data3)
+ data3 <- gsub("is","", data3)
+ data3 <- gsub("on","", data3)
+ data3 <- gsub("as","", data3)
+ data3 <- gsub("at","", data3)
+ data3 <- gsub("but","", data3)
+ data3 <- gsub("wh","", data3)
+ data3 <- gsub("so","", data3)
+ data3 <- gsub("you","", data3)
+ data3 <- gsub("me","", data3)
+ data3 <- gsub("all","", data3)
+
+ write(unlist(data3),"steve_3.txt")
+ data4 <- read.table("steve_3.txt")
+ wordcount <- table(data4)
+ head(sort(wordcount, decreasing=T),20)
+ library(RColorBrewer) 
+ palete <- brewer.pal(9,"Set3") 
+ wordcloud(names(wordcount),freq=wordcount,scale=c(5,1),rot.per=0.25,min.freq=1,
+            random.order=F,random.color=T,colors=palete)
+ legend(0.3,1 ,"Steve Jobs 스탠포드 연설문 분석   ",cex=0.8,fill=NA,border=NA,bg="white"
+       ,text.col="red",text.font=2,box.col="red")
+ savePlot("steve.png",type="png")

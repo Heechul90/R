@@ -1,0 +1,40 @@
+#예제 5-20
+
+ install.packages("httr")
+ install.packages("XML")
+ install.packages("googleVis")  
+ library(XML)
+ library(googleVis)
+ library("httr")
+ cafile <- system.file("CurlSSL", "cacert.pem", package = "RCurl")
+ page <- GET(
+  "https://en.wikipedia.org/", 
+  path="wiki/World_population", 
+  config(cainfo = cafile)
+ )
+ x <- content(page, as ='text')
+ tab <- sub('.*(<table class="grid".*?>.*</table>).*', '\\1', x)
+ pop_table <- readHTMLTable(tab)
+ length(pop_table)
+ pop_table <- readHTMLTable(tab,which=1)  # 1번째 테이블입니다.
+ pop_table[c(1:28),]
+
+ pop2 <- pop_table[c(1:11),c(2:5)]
+ pop2
+ write.csv(pop2,'pop.csv')
+## 저장된 파일을 반드시 책의 예와 같이 수정하세요.
+
+ pop3 <- read.csv('pop.csv',header=T)
+ pop3
+ pop4 <- gvisColumnChart(pop3,xvar="Countries",
+ options=list(title="국가별 인구수 (단위:백만명)",
+ height=400,weight=600))
+ plot(pop4)
+
+#이번에는 위 데이터 중에서 1990 년 자료만 가지고 Pie Chart 를 생성해 보겠습니다.
+
+ pop3
+ pop5 <- pop3[,c(1:2)]
+ pop5
+ pie_1 <- gvisPieChart(pop5,options=list(width=500,height=500))
+ plot(pie_1)

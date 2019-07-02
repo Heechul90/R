@@ -1,0 +1,4 @@
+#¿¹Á¦ 5-1
+ install.packages("googleVis")
+ library(googleVis)
+ demo(WorldBank)

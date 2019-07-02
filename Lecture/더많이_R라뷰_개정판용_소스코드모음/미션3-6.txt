@@ -1,0 +1,41 @@
+#[ 미션 3-6 답: ]
+
+setwd("c:\\r_temp")
+
+# stringsAsFactors argument가 TRUE면 CHARACTER 형식으로, 
+# FALSE면 FACTOR 형식으로 문자열을 읽어 들입니다.
+bus1<- read.csv("버스노선별이용현황합계.csv",sep=",", stringsAsFactors = FALSE)
+bus1
+
+# 각 노선별 승하차 인원수를 그래프로 출력해야 하기 때문에 행과 열을 바꾸겠습니다.
+# 아래의 방법으로 해 보세요.
+
+
+t(bus1)
+
+# 그래프로 표시하려면 반드시 대상 데이터를 컬럼화 해야 하기 때문에 위의 전치행렬 기법으로 
+# 행의 값을 열로 변경했습니다. 그런데 문제는 승하차 인원이 숫자였던 것이 문자로 강제 
+# 형변환이 되었습니다. 행렬은 모든 데이터의 형이 동일하다는거 기억하죠?
+# 그래서 bus1 변수의 숫자 값들만 모아서 아래와 같이 데이터 프레임으로 변경한 후 
+# 작업을 계속하겠습니다.
+
+bus2 <- data.frame(승차승객수=bus1$승차인원, 하차승객수=bus1$하차인원)
+bus2
+
+bus3 <- t(bus2)
+# 위 결과를 보면 출력을 하기 위해 각 버스 노선별로 승/하차 인원수가 컬럼화 되었습니다.
+# 그런데 버스 노선 번호가 없지요?
+# 아래와 같이 출력할 때 노선 번호를 컬럼 이름으로 지정하면 됩니다.
+
+bplot <- barplot(bus3/1000,ylim=c(0,310),
+        main = "서울 주요 마을 버스 이용 승객 현황(2014년 1월)",
+       col = c("green","yellow"), cex.names=0.7, las = 2,ylab="이용 승객수(단위:천명)",
+       xlab="노선명" , beside=T , names.arg=bus1$버스노선번호)
+
+text(x = bplot, y =bus3/1000*0.95, labels =bus3, col = "red", cex = 0.7)
+abline(h=seq(10,350,10),col="white",lty=2,lwd=0.5)
+
+legend(55,300,c("승차인원수","하차인원수"),cex=0.8,col=c("green","yellow"),
+          lty=1,lwd=2,bg="white")
+
+savePlot("마을버스이용현황.png",type="png")

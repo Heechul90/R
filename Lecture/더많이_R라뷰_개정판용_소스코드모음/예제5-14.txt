@@ -1,0 +1,12 @@
+#¿¹Á¦ 5-14
+ 
+ setwd("c:\\r_temp")
+ library(googleVis)
+ Fruits
+ a <- gvisBubbleChart(Fruits, idvar="Fruit", xvar="Sales", yvar="Expenses", 
+                      colorvar="Year", sizevar="Profit", 
+                      options=list(height=500,weight=800,
+                                   hAxis='{minValue:75, maxValue:125}'))
+ plot(a)
+
+
