@@ -11,3 +11,6 @@ R 데이터 분석에 대한 강의
 대전 [이젠컴퓨터학원](http::dj.ezenac.co.kr/)에서 교육
 
 2019.05~2019.11
+
+
+![](https://bookthumb-phinf.pstatic.net/cover/089/048/08904840.jpg?type=m140&udate=20170920)
