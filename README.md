@@ -12,5 +12,6 @@ R 데이터 분석에 대한 강의
 
 2019.05~2019.11
 
+* <a href="https://book.naver.com/bookdb/book_detail.nhn?bid=8904840" target="_blank">R로 쉽게 이해하는 데이터 분석의 핵심 기법, 핵심만 보더라도 제데로!</a>
 
 ![](https://bookthumb-phinf.pstatic.net/cover/089/048/08904840.jpg?type=m140&udate=20170920)
